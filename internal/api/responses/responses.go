@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	ErrCodeNotFound   = "NOT_FOUND"
-	ErrInternalServer = "INTERNAL ERROR"
-	ErrInvalidJSON    = "INVALID JSON"
+	ErrInternalServer   = "INTERNAL_ERROR"
+	ErrInvalidJSON      = "INVALID_JSON"
+	ErrMethodNotAllowed = "METHOD_NOT_ALLOWED"
 )
 
 type Success struct {

@@ -3,11 +3,14 @@ package server
 import (
 	"net/http"
 
+	"github.com/avraam311/tasks-service/internal/api/handlers/tasks"
 	"github.com/avraam311/tasks-service/internal/api/middlewares"
 )
 
-func NewRouter() http.Handler {
+func NewRouter(tasksHand tasks.Handler) http.Handler {
 	mux := http.NewServeMux()
+
+	mux.HandleFunc("POST /todos", tasksHand.CreateTask)
 
 	router := middlewares.RecoveryMiddleware(mux)
 	router = middlewares.LoggingMiddleware(router)
