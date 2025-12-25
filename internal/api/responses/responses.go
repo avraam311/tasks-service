@@ -9,6 +9,7 @@ import (
 const (
 	ErrInternalServer   = "INTERNAL_ERROR"
 	ErrInvalidJSON      = "INVALID_JSON"
+	ErrInvalidID        = "INVALID_ID"
 	ErrMethodNotAllowed = "METHOD_NOT_ALLOWED"
 )
 
