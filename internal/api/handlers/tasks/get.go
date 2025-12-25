@@ -29,7 +29,10 @@ func (h *Handler) GetAllTasks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responses.ResponseOK(w, tasks)
+	err = responses.ResponseOK(w, tasks)
+	if err != nil {
+		slog.Error("failed to send json response", slog.Any("err", err))
+	}
 }
 
 func (h *Handler) GetTask(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +59,7 @@ func (h *Handler) GetTask(w http.ResponseWriter, r *http.Request) {
 
 	task, err := h.service.GetTask(r.Context(), taskID)
 	if err != nil {
-		slog.Error("failed to get task", slog.Any("error", err))
+		slog.Error("failed to get task", slog.Any("task id", taskID), slog.Any("error", err))
 		err := responses.ResponseError(w, responses.ErrInternalServer, "internal server error", http.StatusInternalServerError)
 		if err != nil {
 			slog.Error("failed to send json response", slog.Any("err", err))
@@ -64,5 +67,8 @@ func (h *Handler) GetTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responses.ResponseOK(w, task)
+	err = responses.ResponseOK(w, task)
+	if err != nil {
+		slog.Error("failed to send json response", slog.Any("err", err))
+	}
 }

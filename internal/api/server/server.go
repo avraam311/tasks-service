@@ -13,7 +13,8 @@ func NewRouter(tasksHand tasks.Handler) http.Handler {
 	mux.HandleFunc("POST /todos", tasksHand.CreateTask)
 	mux.HandleFunc("GET /todos", tasksHand.GetAllTasks)
 	mux.HandleFunc("GET /todos/", tasksHand.GetTask)
-	mux.HandleFunc("PUT /todos", tasksHand.UpdateTask)
+	mux.HandleFunc("PUT /todos/", tasksHand.UpdateTask)
+	mux.HandleFunc("DELETE /todos/", tasksHand.DeleteTask)
 
 	router := middlewares.RecoveryMiddleware(mux)
 	router = middlewares.LoggingMiddleware(router)

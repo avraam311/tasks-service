@@ -11,6 +11,9 @@ const (
 	ErrInvalidJSON      = "INVALID_JSON"
 	ErrInvalidID        = "INVALID_ID"
 	ErrMethodNotAllowed = "METHOD_NOT_ALLOWED"
+
+	SuccessTaskUpdated = "TASK_UPDATED"
+	SuccessTaskDeleted = "TASK_DELETED"
 )
 
 type Success struct {

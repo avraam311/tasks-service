@@ -41,5 +41,8 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responses.ResponseCreated(w, taskID)
+	err = responses.ResponseCreated(w, taskID)
+	if err != nil {
+		slog.Error("failed to send json response", slog.Any("err", err))
+	}
 }
