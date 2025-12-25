@@ -12,7 +12,7 @@ import (
 
 func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		slog.Error("failed to decode JSON", slog.String("method", r.Method))
+		slog.Error("not allowed method", slog.String("method", r.Method))
 		err := responses.ResponseError(w, responses.ErrMethodNotAllowed, "only POST allowed", http.StatusMethodNotAllowed)
 		if err != nil {
 			slog.Error("failed to send json response", slog.Any("err", err))
