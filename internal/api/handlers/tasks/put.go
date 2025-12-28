@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/avraam311/tasks-service/internal/api/responses"
 	"github.com/avraam311/tasks-service/internal/models"
+	"github.com/avraam311/tasks-service/internal/repository/tasks"
 )
 
 func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
@@ -47,6 +49,15 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 
 	err = h.service.UpdateTask(r.Context(), taskID, &task)
 	if err != nil {
+		if errors.Is(err, tasks.ErrTaskNotFound) {
+			slog.Error("task not found", slog.Any("task_id", taskID), slog.Any("task", task))
+			err := responses.ResponseError(w, responses.ErrTaskNotFound, "task not found", http.StatusBadRequest)
+			if err != nil {
+				slog.Error("failed to send json response", slog.Any("err", err))
+			}
+			return
+		}
+
 		slog.Error("failed to update task", slog.Any("task id", taskID), slog.Any("task", task), slog.Any("error", err))
 		err := responses.ResponseError(w, responses.ErrInternalServer, "internal server error", http.StatusInternalServerError)
 		if err != nil {

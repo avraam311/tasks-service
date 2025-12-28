@@ -2,7 +2,7 @@ package models
 
 type TaskDTO struct {
 	Header      string `json:"header" validate:"required"`
-	Description string `json:"description" validate:"required"`
+	Description string `json:"description"`
 	Finished    bool   `json:"finished"`
 }
 

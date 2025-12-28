@@ -1,12 +1,14 @@
 package tasks
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/avraam311/tasks-service/internal/api/responses"
+	"github.com/avraam311/tasks-service/internal/repository/tasks"
 )
 
 func (h *Handler) GetAllTasks(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +61,15 @@ func (h *Handler) GetTask(w http.ResponseWriter, r *http.Request) {
 
 	task, err := h.service.GetTask(r.Context(), taskID)
 	if err != nil {
+		if errors.Is(err, tasks.ErrTaskNotFound) {
+			slog.Error("task not found", slog.Any("task_id", taskID), slog.Any("task", task))
+			err := responses.ResponseError(w, responses.ErrTaskNotFound, "task not found", http.StatusBadRequest)
+			if err != nil {
+				slog.Error("failed to send json response", slog.Any("err", err))
+			}
+			return
+		}
+
 		slog.Error("failed to get task", slog.Any("task id", taskID), slog.Any("error", err))
 		err := responses.ResponseError(w, responses.ErrInternalServer, "internal server error", http.StatusInternalServerError)
 		if err != nil {
