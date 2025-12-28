@@ -1,9 +1,14 @@
 package tasks
 
 import (
+	"errors"
 	"sync"
 
 	"github.com/avraam311/tasks-service/internal/models"
+)
+
+var (
+	ErrTaskNotFound = errors.New("task not found")
 )
 
 type Repo struct {
