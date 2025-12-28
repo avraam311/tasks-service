@@ -6,9 +6,12 @@ import (
 	"github.com/avraam311/tasks-service/internal/models"
 )
 
-func (r *Repo) StoreTask(ctx context.Context, task *models.TaskDTO) {
+func (r *Repo) StoreTask(ctx context.Context, task *models.TaskDTO) (uint, error) {
+	taskID := r.taskID
 	r.mu.Lock()
-	defer r.mu.Unlock()
 	r.storage[r.taskID] = task
 	r.taskID++
+	r.mu.Unlock()
+
+	return taskID, nil
 }
