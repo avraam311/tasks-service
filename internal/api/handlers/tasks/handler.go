@@ -18,8 +18,8 @@ type Handler struct {
 	service Service
 }
 
-func New(service Service) *Handler {
-	return &Handler{
+func New(service Service) Handler {
+	return Handler{
 		service: service,
 	}
 }

@@ -6,7 +6,13 @@ import (
 	"os"
 )
 
-type Config struct{}
+type Config struct {
+	Server *Server
+}
+
+type Server struct {
+	Port string `json:"port" validate:"required"`
+}
 
 func New() (*Config, error) {
 	return &Config{}, nil
@@ -22,9 +28,5 @@ func (c *Config) LoadJSON(fileName string) error {
 		return fmt.Errorf("config/config.go - failed to unmarshal data - %w", err)
 	}
 
-	return nil
-}
-
-func (c *Config) LoadEnv(cfg *Config) error {
 	return nil
 }
