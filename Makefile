@@ -1,17 +1,12 @@
-.PHONY: lint, up, buildup, down, test
+.PHONY: lint, up, test
 
 lint:
 	go vet ./...
 	golangci-lint run ./...
 
 up:
-	docker compose up
-
-buildup:
-	docker compose up --build
-
-down:
-	docker compose down -v
+	docker build -t tasks-service .
+	docker run -p 8080:8080 tasks-service
 
 test:
 	go test ./...
