@@ -11,6 +11,7 @@ type Repo interface {
 	LoadAllTasks(ctx context.Context) ([]*models.TaskDomain, error)
 	LoadTask(ctx context.Context, taskID uint) (*models.TaskDomain, error)
 	SwapTask(ctx context.Context, taskID uint, task *models.TaskDTO) error
+	DeleteTask(ctx context.Context, taskID uint) error
 }
 
 type Service struct {
