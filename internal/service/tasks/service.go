@@ -8,6 +8,7 @@ import (
 
 type Repo interface {
 	StoreTask(ctx context.Context, task *models.TaskDTO) (uint, error)
+	LoadAllTasks(ctx context.Context) ([]*models.TaskDomain, error)
 }
 
 type Service struct {
